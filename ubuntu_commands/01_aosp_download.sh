@@ -1,3 +1,75 @@
+1  sudo apt update
+2  sudo apt install open-vm-tools-desktop -y 
+3  sudo reboot
+4  clear
+5  pwd
+6  ls
+7  mkdir My_Workspace
+8  ls
+9  cd My_Workspace/
+10  mkdir WORKING_DIRECTORY
+11  ls
+12  cd WORKING_DIRECTORY/
+13  repo init --partial-clone --no-use-superproject -b android-latest-release -u https://android.googlesource.com/platform/manifest
+14  history
+15  clear
+16  history
+17  repo init --partial-clone --no-use-superproject -b android-latest-release -u https://android.googlesource.com/platform/manifest
+18  sudo apt install repo
+19  repo init --partial-clone --no-use-superproject -b android-latest-release -u https://android.googlesource.com/platform/manifest
+20  git config --global user.email "abdelrahmanmourad.am@gmail.com"
+21  git config --global user.name "Mourad"
+22  repo init --partial-clone --no-use-superproject -b android-latest-release -u https://android.googlesource.com/platform/manifest
+23  clear
+24  sudo apt-get install git-core gnupg flex bison build-essential zip curl zlib1g-dev libc6-dev-i386 x11proto-core-dev libx11-dev lib32z1-dev libgl1-mesa-dev libxml2-utils xsltproc unzip fontconfig
+25  sudo apt-get update
+26  sudo apt-get install repo
+27  export REPO=$(mktemp /tmp/repo.XXXXXXXXX)
+28  curl -o ${REPO} https://storage.googleapis.com/git-repo-downloads/repo
+29  gpg --recv-keys 8BB9AD793E8E6153AF0F9A4416530D5E920F5C65
+30  curl -s https://storage.googleapis.com/git-repo-downloads/repo.asc | gpg --verify - ${REPO} && install -m 755 ${REPO} ~/bin/repo
+31  repo version 
+32  cd ~
+33  ls
+34  mkdir aosp
+35  ls
+36  cd aosp
+37  repo init --partial-clone -b android-latest-release -u https://android.googlesource.com/platform/manifest
+38  repo sync -c -j8
+39  df -h
+40  df -i
+41  sudo apt update
+42  sudo apt install openjdk-8-jdk
+43  sudo apt-get update
+44  sudo apt-get install git-core gnupg flex bison build-essential zip curl zlib1g-dev libc6-dev-i386 x11proto-core-dev libx11-dev lib32z1-dev libgl1-mesa-dev libxml2-utils xsltproc unzip fontconfig
+45  sudo apt install git
+46  htop
+47  sudo apt install htop
+48  htop
+49  sudo apt install -y git devscripts equivs config-package-dev debhelper-compat golang curl
+50  git clone https://github.com/google/android-cuttlefish
+51  cd android-cuttlefish
+52  tools/buildutils/build_packages.sh
+53  sudo apt install libtinfo5
+54  sudo swapoff -a
+55  sudo dd if=/dev/zero of=/swapfile bs=1M count=22192
+56  sudo chmod 0600 /swapfile
+57  sudo mkswap /swapfile  # Set up a Linux swap area
+58  sudo swapon /swapfile  # Turn the swap on
+59  history
+
+
+
+
+
+
+
+
+
+
+
+
+
 # 1  sudo apt update
 #    Updates the list of available packages and their versions.
 
