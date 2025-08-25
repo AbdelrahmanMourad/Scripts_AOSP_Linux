@@ -21,9 +21,6 @@ echo 'git installed version is:'
 git --version                           # Prints the installed git version.
 
 
-
-
-
 # Go to the directory where SSH keys are stored.
 echo 'Changing Directory:'
 cd ~/.ssh                             # Changes to the .ssh directory in your home folder.
@@ -46,3 +43,17 @@ ls                                     # Lists files in the current directory (s
 # Show the public key so you can copy it.
 echo 'Please copy the Generated SSH Key to your github:'
 cat id_rsa.pub                         # Displays the contents of your public key file.
+
+
+################################################################################
+#                            To Run The Script                             #
+################################################################################
+# 1. Make the script executable (if not already):
+#     $ chmod +x git_ssh_key_ubuntu.sh
+
+# 2. Run the script:
+#     $ ./git_ssh_key_ubuntu.sh
+
+# Or, you can run it directly with Bash:
+#     $ bash git_ssh_key_ubuntu.sh
+################################################################################
