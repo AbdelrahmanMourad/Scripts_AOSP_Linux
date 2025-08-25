@@ -21,6 +21,9 @@ echo 'git installed version is:'
 git --version                           # Prints the installed git version.
 
 
+
+
+
 # Go to the directory where SSH keys are stored.
 echo 'Changing Directory:'
 cd ~/.ssh                             # Changes to the .ssh directory in your home folder.
