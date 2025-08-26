@@ -4,9 +4,112 @@
 # This is important for compatibility and to avoid unexpected behavior if the script uses Bash-specific features.
 # Always place the shebang as the very first line in your script.
 
+
+#############################################
+# AOSP
+#############################################
+# Install required packages
+#   To install required packages for Ubuntu 18.04 or later, run the following command:
+sudo apt-get install git-core gnupg flex bison build-essential zip curl zlib1g-dev libc6-dev-i386 x11proto-core-dev libx11-dev lib32z1-dev libgl1-mesa-dev libxml2-utils xsltproc unzip fontconfig
+# 
+#
+#
+# ==================
+# Install Repo tool:
+# ==================
+#   1. Download the current package information:
+sudo apt-get update
+#
+#   2. Run the following command to install the Repo launcher:
+#       The Repo launcher provides a Python script that initializes a checkout and downloads the full Repo tool.
+#       If successful, skip to step 4.
+sudo apt-get install repo
+#
+#   3. (optional) Manually install Repo using the following series of commands:
+#       The first three commands set up a temp file, download Repo to the file, and verify that the key provided 
+#       matches the required key. If these commands are successful, the final command installs the Repo launcher.
+export REPO=$(mktemp /tmp/repo.XXXXXXXXX)
+curl -o ${REPO} https://storage.googleapis.com/git-repo-downloads/repo
+gpg --recv-keys 8BB9AD793E8E6153AF0F9A4416530D5E920F5C65
+curl -s https://storage.googleapis.com/git-repo-downloads/repo.asc | gpg --verify - ${REPO} && install -m 755 ${REPO} ~/bin/repo
+#
+#   4. Verify the Repo launcher version:
+repo version
+# The output should indicate a version of 2.4 or higher, for example:
+#   repo launcher version 2.45
+
+#############################################
+# Download The Android AOSP Source Code:
+#############################################
+#
+# The Android source is located in a collection of Git repositories hosted by Google. 
+#   Each Git repository includes the entire history of the Android source, 
+#   including changes to the source and when the changes were made. To download the Android source:
+#
+#   1. Navigate into your home directory:
+cd ~/WORKSPACE/
+#
+#   2. Create a local working subdirectory within it:
+mkdir AOSP
+#
+#   3. Navigate into the directory:
+cd AOSP
+#
+#   4. Initialize the AOSP repository source code latest release branch (android-latest-release):
+repo init --partial-clone -b android-latest-release -u https://android.googlesource.com/platform/manifest
+#
+#   5. Enter or accept your Git credentials (name, email address).
+#       These credentials are used to track your changes to the source code.
+git config --global user.name "AbdelrahmanMourad"
+git config --global user.email "abdelrahmanmourad.am@gmail.com"
+#
+#   6. Sync the source code:
+repo sync -c -j8
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+
 #############################################
 # Build AOSP for Cuttlefish
 #############################################
+#
+#   To build the code:
+#       1. From within your working directory, source the envsetup.sh script 
+#           to set up your build environment:
+source build/envsetup.sh
+#
+#       2. Specify a target device type to build with the lunch command. 
+#           A target is a device permutation, such as a specific model or form factor. Specify this target:
+# lunch aosp_cf_x86_64_only_auto-aosp_current-userdebug
+lunch aosp_cf_x86_64_auto-trunk_staging-userdebug 
+#
+#           You should see a synopsis of your target and build environment:
+#           ============================================
+#           PLATFORM_VERSION_CODENAME=Baklava
+#           PLATFORM_VERSION=Baklava
+#           TARGET_PRODUCT=aosp_cf_x86_64_only_auto
+#           TARGET_BUILD_VARIANT=userdebug
+#           TARGET_ARCH=x86_64
+#           TARGET_ARCH_VARIANT=silvermont
+#           HOST_OS=linux
+#           HOST_OS_EXTRA=Linux-6.10.11-1rodete2-amd64-x86_64-Debian-GNU/Linux-rodete
+#           HOST_CROSS_OS=windows
+#           BUILD_ID=BP1A.250305.020
+#           OUT_DIR=out
+#           ============================================
+#
+#
+#       3. Build the target:
+m
+# Expect the first build to take hours. 
+#   Subsequent builds take significantly less time. The output of your build appears in $OUT_DIR.
+
+
 source build/envsetup.sh
 ls
 cd
@@ -19,8 +122,8 @@ repo sync -j$(nproc)
 hmm
 m
 
-
-
+#############################################
+# Cuttlefish
 #############################################
 cd ~/WORKSPACE/             
 dy -d 1 -h                          # Check folders sizes.
