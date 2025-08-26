@@ -35,7 +35,7 @@ ssh-keygen -o -t rsa -C "abdelrahmanmourad.am@gmail.com"
 # '-C "email"' adds a label (your email) to the key for identification.
 
 
-# Kist the generated files.
+# List the generated files.
 echo 'Generated Files:'
 ls                                     # Lists files in the current directory (should show your new keys).
 

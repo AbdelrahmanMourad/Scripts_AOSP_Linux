@@ -132,6 +132,18 @@ swapon --show
 # free -h : human-readable RAM/swap usage snapshot.
 free -h
 
+  273  source build/envsetup.sh
+  274  ls
+  275  cd
+  276  cd ~/WORKSPACE/AOSP_15.0.0_36/
+  277  source build/envsetup.sh
+  278  lunch aosp_cf_x86_64_auto-trunk_staging-userdebug
+  279  source build/envsetup.sh
+  280  lunch aosp_cf_x86_64_auto-trunk_staging-userdebug
+  281  repo sync -j$(nproc)
+  282  hmm
+  283  m
+  284  histo
 log "All done. To undo later: 'swapoff $SWAPFILE && rm $SWAPFILE' and remove its line from /etc/fstab."
 log "Backup kept at: /etc/fstab.backup.${TS}"
 #############################################
