@@ -33,9 +33,11 @@ sudo apt install rpi-imager
 sudo snap install code --classic
 
 # =========================================================================================================
-# ------------------------------:
-# ===============================
-
+# Install obs-studio for Linux:
+# =============================
+sudo add-apt-repository ppa:obsproject/obs-studio
+sudo apt install obs-studio
+obs-studio
 
 # =========================================================================================================
 # Install Useful Commands on Linux:
