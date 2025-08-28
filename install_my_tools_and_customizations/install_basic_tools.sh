@@ -12,7 +12,7 @@ google-chrome
 # Install brave-browser on Linux:
 # ===============================
 # install in one line:
-# curl -fsS https://dl.brave.com/install.sh | sh
+# curl -fsS https://dl.brave.com/install.sh | shs
 # or install in multiple lines:
 sudo apt install curl
 sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
