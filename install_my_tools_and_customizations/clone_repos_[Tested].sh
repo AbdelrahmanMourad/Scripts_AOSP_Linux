@@ -1,6 +1,10 @@
 #!bin/bash
 # Shebang
-
+# 
+# 
+# 
+# 
+# 
 # ========================================================================
 # clone my repos:
 # ========================================================================
@@ -19,9 +23,10 @@ git clone git@github.com:AbdelrahmanMourad/ProblemSolving_C.git
 git clone git@github.com:AbdelrahmanMourad/Diploma_LearnInDepth_wEngKerolesShenouda.git
 git clone git@github.com:AbdelrahmanMourad/Diploma_MasterEmbeddedSystems_wEngAhmedAbdelghafar.git
 git clone git@github.com:AbdelrahmanMourad/ProblemSolving_Cpp.git
-#
-#
-
+# 
+# 
+# 
+# 
 # ========================================================================
 # clone other repos:
 # ========================================================================
@@ -39,3 +44,21 @@ git clone git@github.com:AbdelrahmanMourad/Competitive-Programming.git
 git clone git@github.com:AbdelrahmanMourad/PX4-user_guide.git
 git clone git@github.com:AbdelrahmanMourad/MasteringEmbeddedSystemOnlineDiploma.git
 git clone git@github.com:AbdelrahmanMourad/-Data-structure-through-cpp-cheat-sheet.git
+# 
+# 
+# 
+# 
+# 
+# =======================================================================
+# View the cloned repos:
+# =======================================================================
+cd ~/WORKSPACE/REPOS
+tree -L 2
+# 
+# 
+# 
+# 
+# 
+# ========================================================================
+# End of script
+# ========================================================================
