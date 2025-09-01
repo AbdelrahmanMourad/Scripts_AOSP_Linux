@@ -14,6 +14,7 @@ mkdir ~/WORKSPACE/REPOS/mine
 cd ~/WORKSPACE/REPOS/mine
 #
 # Clone repos:
+echo "Cloning my repos..."
 git clone git@github.com:AbdelrahmanMourad/Course_CPP17_DrMostafaSaadIbrahim.git
 git clone git@github.com:AbdelrahmanMourad/EmbeddedLinuxDiploma_RoboticsCorner.git
 git clone git@github.com:AbdelrahmanMourad/Course_CPP20_FromBeginnerToBeyond_Udemy.gits
@@ -36,6 +37,7 @@ mkdir ~/WORKSPACE/REPOS/other
 cd ~/WORKSPACE/REPOS/other
 #
 # clone repos:
+echo "Cloning other repos..."
 git clone git@github.com:Mohamedsaied8/EmbeddedLinuxDiploma.git
 git clone git@github.com:AbdelrahmanMourad/cpp-cheat-sheet.git
 git clone git@github.com:AbdelrahmanMourad/CodeForces.git
@@ -52,6 +54,9 @@ git clone git@github.com:AbdelrahmanMourad/-Data-structure-through-cpp-cheat-she
 # =======================================================================
 # View the cloned repos:
 # =======================================================================
+#
+echo "The Repos have been cloned successfully. ^_^"
+ehco "Here are the cloned repos:"
 cd ~/WORKSPACE/REPOS
 tree -L 2
 # 
