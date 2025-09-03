@@ -83,8 +83,12 @@ echo "--------------------------------------"
 # =======================================================================
 #
 echo "The Repos have been cloned successfully. ^_^"
-ehco "Here are the cloned repos:"
+echo "Here are the cloned repos:"
 cd ~/WORKSPACE/REPOS
+# Display the REPOS tree up to 2 levels
+echo "The REPOS tree:"
+# Install tree if not installed
+sudo apt install tree
 tree -L 2
 # 
 # 
