@@ -58,25 +58,18 @@ echo "======================"
 echo
 echo "-------------------"
 git clone git@github.com:Mohamedsaied8/EmbeddedLinuxDiploma.git
-echo "--------------------------------------"
 echo "-------------------"
 git clone git@github.com:AbdelrahmanMourad/cpp-cheat-sheet.git
-echo "--------------------------------------"
 echo "-------------------"
 git clone git@github.com:AbdelrahmanMourad/CodeForces.git
-echo "--------------------------------------"
 echo "-------------------"
 git clone git@github.com:AbdelrahmanMourad/hackerrank-solutions.git
-echo "--------------------------------------"
 echo "-------------------"
 git clone git@github.com:AbdelrahmanMourad/Competitive-Programming.git
-echo "--------------------------------------"
 echo "-------------------"
 git clone git@github.com:AbdelrahmanMourad/PX4-user_guide.git
-echo "--------------------------------------"
 echo "-------------------"
 git clone git@github.com:AbdelrahmanMourad/MasteringEmbeddedSystemOnlineDiploma.git
-echo "--------------------------------------"
 echo "-------------------"
 git clone git@github.com:AbdelrahmanMourad/-Data-structure-through-cpp-cheat-sheet.git
 echo "--------------------------------------"
