@@ -36,6 +36,8 @@ git clone git@github.com:AbdelrahmanMourad/Diploma_LearnInDepth_wEngKerolesSheno
 echo "-------------------"
 git clone git@github.com:AbdelrahmanMourad/Diploma_MasterEmbeddedSystems_wEngAhmedAbdelghafar.git
 echo "-------------------"
+git clone git@github.com:AbdullahAbdelhakeem6484/aospcamp_materials.git
+echo "-------------------"
 git clone git@github.com:AbdelrahmanMourad/ProblemSolving_Cpp.git
 echo "--------------------------------------"
 # 
