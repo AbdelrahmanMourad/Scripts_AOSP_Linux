@@ -59,35 +59,148 @@ sudo apt install -y brave-browser
 
 
 
+# =========================================================================================================
+# 3. Install Programming Languages & Compilers:
+#       This section installs compilers/interpreters for Python, C, C++, Java, and Kotlin.
+# =========================================================================================================
+#
+echo
+echo "=============================================================="
+echo "=== 3. Installing Programming Languages & Compilers...     ==="
+echo "=============================================================="
+
+# -----------------------------------------------------
+# Python (Interpreter for Python 3)
+#   - Popular language for scripting, automation, and data science.
+# -----------------------------------------------------
+echo "[INFO] Installing Python 3 and pip..."
+sudo apt install -y python3 python3-pip
+
+# -----------------------------------------------------
+# C and C++ (GNU Compiler Collection)
+#   - gcc: C compiler
+#   - g++: C++ compiler
+# -----------------------------------------------------
+echo "[INFO] Installing GCC (C) and G++ (C++) compilers..."
+sudo apt install -y gcc g++
+
+# -----------------------------------------------------
+# Java (OpenJDK)
+#   - openjdk-17-jdk: Java Development Kit (JDK) version 17
+# -----------------------------------------------------
+echo "[INFO] Installing OpenJDK (Java)..."
+sudo apt install -y openjdk-17-jdk
+
+# -----------------------------------------------------
+# Kotlin (via Snap)
+#   - Modern JVM language, interoperable with Java.
+# -----------------------------------------------------
+echo "[INFO] Installing Kotlin compiler..."
+sudo snap install --classic kotlin
+
+
+
 
 # =========================================================================================================
-# 3. Install IDEs (Integrated Development Environments):
+# 4. Install IDEs (Integrated Development Environments):
 # =========================================================================================================
 #
 echo
 echo "===================================="
-echo "=== 3. Installing IDEs...        ==="
+echo "=== 4. Installing IDEs...        ==="
 echo "===================================="
 
 # -----------------------------------------------------
 # Visual Studio Code (Popular code editor by Microsoft)
 #   - Supports many languages and extensions.
 # -----------------------------------------------------
+echo "[INFO] Installing vs-code ide..."
 sudo snap install code --classic
 
+# -----------------------------------------------------
+# setup_vscode_formatters.sh
+# Purpose:
+#   Automate setup of formatters in VS Code for C++, Python, Bash
+#   so Shift+Alt+F works out of the box.
+# -----------------------------------------------------
+set -e
 
+echo "=== [1/4] Installing required tools ==="
+# Update system
+sudo apt update -y
+
+# Install clang-format for C++
+sudo apt install -y clang-format
+
+# Install Python + pip if missing
+sudo apt install -y python3 python3-pip
+pip3 install --upgrade pip
+
+# Install Python formatter (black)
+pip3 install black
+
+# Install ShellCheck for linting shell scripts
+sudo apt install -y shellcheck
+
+# Install shfmt for shell formatting (requires Go)
+if ! command -v go &>/dev/null; then
+    echo "[INFO] Installing Go (needed for shfmt)..."
+    sudo apt install -y golang
+fi
+go install mvdan.cc/sh/v3/cmd/shfmt@latest
+export PATH=$PATH:$(go env GOPATH)/bin
+
+echo "=== [2/4] Installing VS Code extensions ==="
+code --install-extension ms-vscode.cpptools --force       # C++ support
+code --install-extension ms-python.python --force         # Python support
+code --install-extension foxundermoon.shell-format --force # Bash formatting
+code --install-extension timonwong.shellcheck --force     # Bash linting
+
+echo "=== [3/4] Updating VS Code user settings ==="
+SETTINGS_DIR="$HOME/.config/Code/User"
+SETTINGS_FILE="$SETTINGS_DIR/settings.json"
+
+mkdir -p "$SETTINGS_DIR"
+
+# Create settings.json with formatters
+cat > "$SETTINGS_FILE" <<'EOF'
+{
+    // =============================
+    // Auto-formatting configuration
+    // =============================
+    "[cpp]": {
+        "editor.defaultFormatter": "ms-vscode.cpptools"
+    },
+    "[c]": {
+        "editor.defaultFormatter": "ms-vscode.cpptools"
+    },
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.python"
+    },
+    "[shellscript]": {
+        "editor.defaultFormatter": "foxundermoon.shell-format"
+    },
+    "python.formatting.provider": "black",
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true
+}
+EOF
+
+echo "=== [4/4] Done! ==="
+echo "Formatters installed for C++, Python, and Bash."
+echo "You can now press Shift+Alt+F in VS Code to format code."
 
 
 
 
 
 # =========================================================================================================
-# 4. Install Rpi Tools
+# 5. Install Rpi Tools
 # =========================================================================================================
 #
 echo
 echo "===================================="
-echo "=== 4. Installing RPi Tools...   ==="
+echo "=== 5. Installing RPi Tools...   ==="
 echo "===================================="
 
 # -----------------------------------------------------
@@ -109,12 +222,12 @@ sudo apt install -y rpi-imager
 
 
 # =========================================================================================================
-# 5. Install OBS Studio for Linux:
+# 6. Install OBS Studio for Linux:
 # =========================================================================================================
 #
 echo
 echo "===================================="
-echo "=== 5. Installing OBS Studio...  ==="
+echo "=== 6. Installing OBS Studio...  ==="
 echo "===================================="
 
 # -----------------------------------------------------
@@ -132,12 +245,12 @@ sudo apt install -y obs-studio
 
 
 # =========================================================================================================
-# 6. Install Media-Players:
+# 7. Install Media-Players:
 # =========================================================================================================
 #
 echo
 echo "====================================="
-echo "=== 6. Installing Media Players... =="
+echo "=== 7. Installing Media Players... =="
 echo "====================================="
 
 # -----------------------------------------------------
@@ -161,12 +274,12 @@ sudo apt install -y smplayer smplayer-themes smplayer-skins
 
 
 # =========================================================================================================
-# 7. Install Utilities (Useful Commands):
+# 8. Install Utilities (Useful Commands):
 # =========================================================================================================
 #
 echo
 echo "==============================================="
-echo "=== 7. Installing Utilities (commands)...   ==="
+echo "=== 8. Installing Utilities (commands)...   ==="
 echo "==============================================="
 
 # -----------------------------------------------------
@@ -190,13 +303,13 @@ sudo apt install -y git tmux tree neofetch unzip net-tools build-essential
 
 
 # =========================================================================================================
-# 8. Install install_office_tools
+# 9. Install install_office_tools
 #       This script part installs LibreOffice, OnlyOffice, and WPS Office on Ubuntu.
 # =========================================================================================================
 #
 echo
 echo "===================================="
-echo "=== 8. Installing Office Suites  ==="
+echo "=== 9. Installing Office Suites  ==="
 echo "===================================="
 
 # -----------------------------------------------------
@@ -236,46 +349,6 @@ sudo apt clean
 
 
 
-# =========================================================================================================
-# 9. Install Programming Languages & Compilers:
-#       This section installs compilers/interpreters for Python, C, C++, Java, and Kotlin.
-# =========================================================================================================
-#
-echo
-echo "=============================================================="
-echo "=== 9. Installing Programming Languages & Compilers...     ==="
-echo "=============================================================="
-
-# -----------------------------------------------------
-# Python (Interpreter for Python 3)
-#   - Popular language for scripting, automation, and data science.
-# -----------------------------------------------------
-echo "[INFO] Installing Python 3 and pip..."
-sudo apt install -y python3 python3-pip
-
-# -----------------------------------------------------
-# C and C++ (GNU Compiler Collection)
-#   - gcc: C compiler
-#   - g++: C++ compiler
-# -----------------------------------------------------
-echo "[INFO] Installing GCC (C) and G++ (C++) compilers..."
-sudo apt install -y gcc g++
-
-# -----------------------------------------------------
-# Java (OpenJDK)
-#   - openjdk-17-jdk: Java Development Kit (JDK) version 17
-# -----------------------------------------------------
-echo "[INFO] Installing OpenJDK (Java)..."
-sudo apt install -y openjdk-17-jdk
-
-# -----------------------------------------------------
-# Kotlin (via Snap)
-#   - Modern JVM language, interoperable with Java.
-# -----------------------------------------------------
-echo "[INFO] Installing Kotlin compiler..."
-sudo snap install --classic kotlin
-
-
 
 
 # =========================================================================================================
@@ -287,7 +360,6 @@ echo "===================================="
 echo "=== All installations complete!  ==="
 echo "===================================="
 #
-
 
 
 
