@@ -377,6 +377,7 @@ sudo dpkg -i ./cuttlefish-user_*_*64.deb || sudo apt-get install -f
 sudo usermod -aG kvm,cvdnetwork,render $USER
 sudo reboot
 #       The reboot triggers installing additional kernel modules and applies udev rules.
+#           __
 #           ||
 #           ||
 #           ||
