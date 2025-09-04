@@ -235,6 +235,49 @@ sudo apt clean
 
 
 
+
+# =========================================================================================================
+# 9. Install Programming Languages & Compilers:
+#       This section installs compilers/interpreters for Python, C, C++, Java, and Kotlin.
+# =========================================================================================================
+#
+echo
+echo "=============================================================="
+echo "=== 9. Installing Programming Languages & Compilers...     ==="
+echo "=============================================================="
+
+# -----------------------------------------------------
+# Python (Interpreter for Python 3)
+#   - Popular language for scripting, automation, and data science.
+# -----------------------------------------------------
+echo "[INFO] Installing Python 3 and pip..."
+sudo apt install -y python3 python3-pip
+
+# -----------------------------------------------------
+# C and C++ (GNU Compiler Collection)
+#   - gcc: C compiler
+#   - g++: C++ compiler
+# -----------------------------------------------------
+echo "[INFO] Installing GCC (C) and G++ (C++) compilers..."
+sudo apt install -y gcc g++
+
+# -----------------------------------------------------
+# Java (OpenJDK)
+#   - openjdk-17-jdk: Java Development Kit (JDK) version 17
+# -----------------------------------------------------
+echo "[INFO] Installing OpenJDK (Java)..."
+sudo apt install -y openjdk-17-jdk
+
+# -----------------------------------------------------
+# Kotlin (via Snap)
+#   - Modern JVM language, interoperable with Java.
+# -----------------------------------------------------
+echo "[INFO] Installing Kotlin compiler..."
+sudo snap install --classic kotlin
+
+
+
+
 # =========================================================================================================
 # End of Script
 # =========================================================================================================
