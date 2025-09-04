@@ -20,6 +20,7 @@ alias ll='ls -la'             # List all files with detailed information
 alias ..='cd ..'              # Move up one directory
 alias ...='cd ../..'          # Move up two directories
 alias open='xdg-open .'       # Open files/folders in GUI from terminal
+alias size='du -sh */'        # Show sizes of directories in current folder
 
 # Git shortcuts
 # alias gs='git status'       # Check the status of a Git repository
