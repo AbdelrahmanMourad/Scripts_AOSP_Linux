@@ -7,14 +7,14 @@
 # <-- Use your existing source directory here -->
 #   (Must be the same as where you ran `repo sync` to download AOSP source)
 # ==================================================================
-cd ~/WORKSPACE/AOSP/AOSPAOSP_15.0.0_36   
+cd ~/WORKSPACE/AOSP_15.0.0_36   
 
 # ==================================================================
 # Set output directory for AOSP build for RPi5 Android_15.0.0_36 
 #   (customize as needed, must be before the build commands)
 # ==================================================================
-export OUT_DIR=~/WORKSPACE/AOSP_15.0.0_36/out_AOSP15_RPi5
-
+# export OUT_DIR=~/WORKSPACE/AOSP_15.0.0_36/out_AOSP15_RPi5
+export OUT_DIR=~/WORKSPACE/AOSP_15.0.0_36/out_AOSP15_CF
 
 
 # ==================================================================
@@ -45,7 +45,8 @@ sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
 # OpenJDK-11-jdk:
 # ----------------
 sudo apt-get update
-sudo apt-get install openjdk-11-jdk
+# sudo apt-get install openjdk-11-jdk
+sudo apt-get install openjdk-17-jdk     # The needed for android 15
 java -version
 # 
 # ----------
@@ -70,13 +71,23 @@ git config --global user.email "abdelrahmanmourad.am@gmail.com"
 # 
 # Install the required packages on the Build Machine
 sudo apt-get install bc coreutils dosfstools e2fsprogs fdisk kpartx mtools ninja-build pkg-config python3-pip
-sudo pip3 install meson mako jinja2 ply pyyaml dataclasses
+# sudo pip3 install meson mako jinja2 ply pyyaml dataclasses
+sudo apt-get install python3-venv python3-full
+python3 -m venv ~/aosp-venv
+# source ~/aosp-venv/bin/activate
+# pip install meson mako jinja2 ply pyyaml
+pip install --user meson mako jinja2 ply pyyaml
+
+
 #
-# ----------------
-# Initialize repo:
-# ----------------
-repo init -u https://android.googlesource.com/platform/manifest -b android-15.0.0_r36
-curl -o .repo/local_manifests/manifest_brcm_rpi.xml -L https://raw.githubusercontent.com/raspberry-vanilla/android_local_manifest/android-15.0/manifest_brcm_rpi.xml --create-dirs
+# ----------------------------
+# Initialize the android repo:
+# ---------------------------
+# cuttlefish
+repo init --partial-clone -b android-latest-release -u https://android.googlesource.com/platform/manifest
+# # raspberrypi-vanilla
+# repo init -u https://android.googlesource.com/platform/manifest -b android-15.0.0_r36
+# curl -o .repo/local_manifests/manifest_brcm_rpi.xml -L https://raw.githubusercontent.com/raspberry-vanilla/android_local_manifest/android-15.0/manifest_brcm_rpi.xml --create-dirs
 # #
 # # Or optionally, you can reduce download size by creating a shallow clone and removing unneeded projects
 # repo init -u https://android.googlesource.com/platform/manifest -b android-15.0.0_r36 --depth=1
@@ -87,7 +98,7 @@ curl -o .repo/local_manifests/manifest_brcm_rpi.xml -L https://raw.githubusercon
 # Repo Sync once Repo Init done:
 # ------------------------------
 # repo sync -jn
-repo sync
+# repo sync
 #
 # ==================================================================
 # Fix: (Clean the old builds workaround) 
@@ -98,6 +109,7 @@ make clean
 # Fix: (Repo sync issues workaround) 
 # ==================================================================
 repo sync -c -j$(nproc --all) --force-sync
+# repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
 #
 # ==================================================================
 # Fix: (Clean the old builds workaround) 
@@ -130,6 +142,7 @@ source build/envsetup.sh
 #-----------------------------------------
 # Pick “aosp_rpi5_car-trunk_staging-userdebug” for Raspberry Pi 5 Automotive OS Build.
 lunch aosp_rpi5_car-trunk_staging-userdebug
+# lunch aosp_cf_x86_64_auto-trunk_staging-userdebug 
 #
 # ============================================
 # ============Output Configuration============
@@ -156,8 +169,8 @@ lunch aosp_rpi5_car-trunk_staging-userdebug
 # ----------------------------
 # Build AOSP-15 System Images:
 # ----------------------------
-make bootimage systemimage vendorimage -j$(nproc)
-# $ m
+# make bootimage systemimage vendorimage -j$(nproc)
+m
 # Once system images are generated they will be stored at “ out/target/product/rpi5/”.
 
 

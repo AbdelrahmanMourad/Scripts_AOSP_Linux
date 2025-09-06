@@ -8,6 +8,25 @@
 #######
 # AOSP
 #######
+# ==================================================================
+# <-- Use your existing source directory here -->
+#   (Must be the same as where you ran `repo sync` to download AOSP source)
+# ==================================================================
+cd ~/WORKSPACE/AOSP/AOSPAOSP_15.0.0_36   
+
+# ==================================================================
+# Set output directory for AOSP build for RPi5 Android_15.0.0_36 
+#   (customize as needed, must be before the build commands)
+# ==================================================================
+export OUT_DIR=~/WORKSPACE/AOSP_15.0.0_36/out_AOSP15_CF
+# export OUT_DIR=~/WORKSPACE/AOSP_15.0.0_36/out_AOSP15_RPi5
+
+
+# ==================================================================
+# Fix: (workaround to allow unpriviliged user namespace through Apparmor) 
+# ==================================================================
+sudo sysctl -w kernel.apparmor_restrict_unprivileged_unconfined=0 
+sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0 
 #
 #
 # Install required packages
@@ -15,30 +34,30 @@
 sudo apt-get install git-core gnupg flex bison build-essential zip curl zlib1g-dev libc6-dev-i386 x11proto-core-dev libx11-dev lib32z1-dev libgl1-mesa-dev libxml2-utils xsltproc unzip fontconfig
 #
 #
-# ==================
-# Install Repo tool:
-# ==================
-#   1. Download the current package information:
-sudo apt-get update
-#
-#   2. Run the following command to install the Repo launcher:
-#       The Repo launcher provides a Python script that initializes a checkout and downloads the full Repo tool.
-#       If successful, skip to step 4.
-sudo apt-get install repo
-#
-#   3. (optional) Manually install Repo using the following series of commands:
-#       The first three commands set up a temp file, download Repo to the file, and verify that the key provided 
-#       matches the required key. If these commands are successful, the final command installs the Repo launcher.
-export REPO=$(mktemp /tmp/repo.XXXXXXXXX)
-curl -o ${REPO} https://storage.googleapis.com/git-repo-downloads/repo
-gpg --recv-keys 8BB9AD793E8E6153AF0F9A4416530D5E920F5C65
-curl -s https://storage.googleapis.com/git-repo-downloads/repo.asc | gpg --verify - ${REPO} && install -m 755 ${REPO} ~/bin/repo
-#
-#   4. Verify the Repo launcher version:
-repo version
-# The output should indicate a version of 2.4 or higher, for example:
-#   repo launcher version 2.45
-#
+# # ==================
+# # Install Repo tool:
+# # ==================
+# #   1. Download the current package information:
+# sudo apt-get update
+# #
+# #   2. Run the following command to install the Repo launcher:
+# #       The Repo launcher provides a Python script that initializes a checkout and downloads the full Repo tool.
+# #       If successful, skip to step 4.
+# sudo apt-get install repo
+# #
+# #   3. (optional) Manually install Repo using the following series of commands:
+# #       The first three commands set up a temp file, download Repo to the file, and verify that the key provided 
+# #       matches the required key. If these commands are successful, the final command installs the Repo launcher.
+# export REPO=$(mktemp /tmp/repo.XXXXXXXXX)
+# curl -o ${REPO} https://storage.googleapis.com/git-repo-downloads/repo
+# gpg --recv-keys 8BB9AD793E8E6153AF0F9A4416530D5E920F5C65
+# curl -s https://storage.googleapis.com/git-repo-downloads/repo.asc | gpg --verify - ${REPO} && install -m 755 ${REPO} ~/bin/repo
+# #
+# #   4. Verify the Repo launcher version:
+# repo version
+# # The output should indicate a version of 2.4 or higher, for example:
+# #   repo launcher version 2.45
+# #
 #
 #############################################
 # Download The Android AOSP Source Code:
@@ -83,7 +102,8 @@ source build/envsetup.sh
 #       2. Specify a target device type to build with the lunch command. 
 #           A target is a device permutation, such as a specific model or form factor. Specify this target:
 # lunch aosp_cf_x86_64_only_auto-aosp_current-userdebug
-lunch aosp_cf_x86_64_auto-trunk_staging-userdebug 
+lunch aosp_cf_x86_64_auto-trunk_staging-userdebug
+# lunch aosp_rpi5_car-trunk_staging-userdebug
 #
 #           You should see a synopsis of your target and build environment:
 #           ============================================
