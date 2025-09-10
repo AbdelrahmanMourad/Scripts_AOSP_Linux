@@ -368,11 +368,107 @@ ls
 <details>
 <summary>Soong</summary>
 
+### 🛠️ Soong Build System (Android.bp)
+
+- What is Soong?
+  - Soong is Android’s next-generation build system, written in Go, designed to replace the old GNU Make–based system (`Android.mk`).
+  - It uses declarative `Android.bp` files (Blueprint format, JSON-like syntax).
+  - It outputs Ninja build files, which handle the actual compilation.
+- Why Soong?
+  - AOSP had grown too large for Makefiles to manage efficiently.
+  - Soong is faster, easier to maintain, and less error-prone.
+  - Clearer syntax, fewer hacks compared to Android.mk.
+- How it works (Flow):
+  1. You write a module description in `Android.bp`.
+  2. The Soong parser (Blueprint) reads it.
+  3. Soong generates Ninja build rules.
+  4. Ninja executes the build (compiling, linking, packaging).
+- Key File Types:
+  - `Android.bp` → Blueprint module definitions.
+  - `Android.mk` → Legacy Make modules (still supported in some places for backward compatibility).
+  - `Blueprints` → Go library used by Soong to parse `Android.bp`.
+- Example: Android.bp for a simple library
+
+```bash 
+cc_library 
+{
+    name: "libhello",
+    srcs: ["hello.cpp"],
+    shared_libs: ["liblog"],
+}
+```
+
+- Example: Android.bp for an app
+
+```bash
+android_app 
+{
+    name: "HelloWorld",
+    srcs: ["src/**/*.java"],
+    manifest: "AndroidManifest.xml",
+}
+```
+
+- Key Advantages:
+  - `Declarative` → You just declare what the module is, not how to build it.
+  - `Modular` → Each component can be defined independently.
+  - `Cross-platform` → Soong supports host tools, target builds, and multiple architectures.
+- Important Directories for Soong:
+  - `build/soong/` → Core implementation.
+  - `Android.bp` files → Scattered across nearly every module (frameworks, packages, hardware).
+  - `soong_ui.bash` → Entry point when you run m or mm.
+
+👉 How to explain during your talk:
+“Android used to rely heavily on Makefiles (Android.mk), but with the project’s size, Make became slow and messy. Google introduced Soong, a modern build system based on Android.bp files. These files are clean, JSON-like, and easier to read. Soong converts them into Ninja build files, and Ninja does the actual heavy lifting. So basically: Android.bp → Soong → Ninja → binaries.”
+
 </details>
 
 <details>
 <summary>Ninja</summary>
 
+- 🔧 **What is Ninja?**
+  - Ninja is a low-level build execution tool (like `make`, but much faster).
+  - It does not decide what to build → instead, it just executes build steps.
+  - It relies on higher-level tools (like Soong or Make) to generate its build files (`.ninja` files).
+
+- 🔄 **Flow: Android.bp/Android.mk** → Soong/Make → Ninja
+  1. Developers write `Android.bp` (Soong) or `Android.mk` (Make).
+  2. Soong (or Make) parses these files and decides build rules.
+  3. Soong generates `.ninja` build definitions inside the `out/` folder.
+      - Example: `out/soong/build.ninja`
+  4. Ninja executes those rules to compile source code into `.o` files, `.apks`, `.imgs`, etc.
+
+- 🚀 Why Ninja?
+  - Speed: It’s designed for large projects (like AOSP with millions of lines of code).
+  - Parallelism: Builds multiple files at once efficiently.
+  - Simplicity: Ninja itself doesn’t try to be smart — it just runs commands as described.
+  - Reliability: If a file didn’t change, Ninja won’t rebuild it (incremental builds).
+
+- 📂 Where Ninja Fits in AOSP
+  - `Android.bp` (Soong input) → gets converted to `out/soong/build.ninja`.
+  - `Android.mk` (legacy Make input) → converted into ninja rules via `kati` tool.
+  - Ninja executes everything and produces:
+    - `system.img`
+    - `vendor.img`
+    - host tools in `out/host/`
+
+### 🖥 Example Commands
+When you build Android:
+```bash
+# High-level build (invokes soong + ninja)
+m
+m framework
+
+# You can also call ninja directly:
+ninja -f out/combined-aosp.ninja framework
+```
+
+Here:
+- `m` is a wrapper script → calls Soong → generates ninja files → runs ninja.
+- `ninja` actually compiles the code.
+
+### 📝 In a Presentation, You Can Say:
+👉 “Think of Ninja as the construction workers. They don’t design the building, they just follow the blueprint. Soong (with `Android.bp`) creates the blueprint (`.ninja` files), and Ninja does the heavy lifting to turn source code into actual binaries.”
 </details>
 
 
