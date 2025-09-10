@@ -7,14 +7,7 @@
 # <-- Use your existing source directory here -->
 #   (Must be the same as where you ran `repo sync` to download AOSP source)
 # ==================================================================
-cd ~/WORKSPACE/AOSP_15.0.0_36   
-
-# ==================================================================
-# Set output directory for AOSP build for RPi5 Android_15.0.0_36 
-#   (customize as needed, must be before the build commands)
-# ==================================================================
-# export OUT_DIR=~/WORKSPACE/AOSP_15.0.0_36/out_AOSP15_RPi5
-export OUT_DIR=~/WORKSPACE/AOSP_15.0.0_36/out_AOSP15_CF
+cd ~/WORKSPACE/AOSP_15.0.0_36
 
 
 # ==================================================================
@@ -84,10 +77,11 @@ pip install --user meson mako jinja2 ply pyyaml
 # Initialize the android repo:
 # ---------------------------
 # cuttlefish
-repo init --partial-clone -b android-latest-release -u https://android.googlesource.com/platform/manifest
+# repo init --partial-clone -b android-latest-release -u https://android.googlesource.com/platform/manifest
+#
 # # raspberrypi-vanilla
-# repo init -u https://android.googlesource.com/platform/manifest -b android-15.0.0_r36
-# curl -o .repo/local_manifests/manifest_brcm_rpi.xml -L https://raw.githubusercontent.com/raspberry-vanilla/android_local_manifest/android-15.0/manifest_brcm_rpi.xml --create-dirs
+repo init -u https://android.googlesource.com/platform/manifest -b android-15.0.0_r36
+curl -o .repo/local_manifests/manifest_brcm_rpi.xml -L https://raw.githubusercontent.com/raspberry-vanilla/android_local_manifest/android-15.0/manifest_brcm_rpi.xml --create-dirs
 # #
 # # Or optionally, you can reduce download size by creating a shallow clone and removing unneeded projects
 # repo init -u https://android.googlesource.com/platform/manifest -b android-15.0.0_r36 --depth=1
@@ -110,11 +104,6 @@ make clean
 # ==================================================================
 repo sync -c -j$(nproc --all) --force-sync
 # repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
-#
-# ==================================================================
-# Fix: (Clean the old builds workaround) 
-# ==================================================================
-make clean
 
 
 
@@ -127,6 +116,20 @@ make clean
 # Setup Android build environment:
 # --------------------------------
 source build/envsetup.sh
+
+#
+# ==================================================================
+# Fix: (Clean the old builds workaround) 
+# ==================================================================
+make clean
+
+# ==================================================================
+# Set output directory for AOSP build for RPi5 Android_15.0.0_36 
+#   (customize as needed, must be before the build commands)
+# ==================================================================
+export OUT_DIR=~/WORKSPACE/AOSP_15.0.0_36/out_AOSP15_RPi5
+# export OUT_DIR=~/WORKSPACE/AOSP_15.0.0_36/out_AOSP15_CF
+
 #
 #-----------------------------------------
 # Check for lunch options
