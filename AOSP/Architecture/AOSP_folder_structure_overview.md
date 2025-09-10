@@ -368,12 +368,6 @@ ls
 <details>
 <summary>Soong</summary>
 
-## Understanding the Build System Integration
-
-- Soong (Android.bp) → modern build system.
-- Make (Android.mk) → legacy system.
-- Ninja → final build execution.
-- Build artifacts → stored under `out/`.
 </details>
 
 <details>
