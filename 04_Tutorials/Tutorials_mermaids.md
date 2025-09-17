@@ -1,155 +1,145 @@
-# 📘 Tutorial: Copy Folders to External HDD with Progress and Safe Eject (Ubuntu)
+# 📘 Mermaid Diagrams in Markdown
 
-This tutorial explains how to **mount an external HDD**, **copy multiple folders with progress**, and then **safely eject the drive**.  
-Each step includes commands and explanations of the flags, symbols, and variables used.
+Mermaid lets you **draw diagrams** directly in Markdown files using a special code block:
 
----
-
-## 🟢 STEP 1: Detect External HDD
-
-First, check if your external HDD mount directory exists.
-
-```bash
-MOUNTPOINT="/media/$USER/Mourad1"
-```
-- `MOUNTPOINT="..."` → defines a variable that stores the mount location.
-- `$USER` → built-in variable containing your current username (e.g., `mourad`).
-- `/media/$USER/Mourad1` → typical location where USB drives and external disks are mounted.
-
----
-
-### 1.1 Create mount directory if it doesn’t exist
-
-```bash
-if [ ! -d "$MOUNTPOINT" ]; then
-    sudo mkdir -p "$MOUNTPOINT"
-else
-    echo "-> Mount directory already exists: $MOUNTPOINT"
-fi
+```mermaid
+flowchart TD
+    A[Start] --> B[Do something]
+    B --> C[Finish]
 ```
 
-- `[ ]` → Bash test command.
-- `-d` → true if a directory exists.
-- `!` → negation (NOT).
-- `"$MOUNTPOINT"` → expands to the value of the variable.
-- `mkdir -p` → create directory (no error if it already exists).
-- `sudo` → run as root (required for system folders).
-
 ---
 
-### 1.2 Mount the drive if not mounted
+## 1. Basic Flowchart
 
-``` bash
-if mount | grep -q "$MOUNTPOINT"; then
-    echo "-> External HDD is already mounted at $MOUNTPOINT"
-else
-    sudo mount /dev/sda1 "$MOUNTPOINT"
-fi
+```mermaid
+flowchart TD
+    A[Start] --> B[Process]
+    B --> C[End]
 ```
 
-- `mount` → lists mounted filesystems.
-- `grep -q` → quiet search, no output, just success/failure.
-- `/dev/sda1` → first partition of external drive.
+- `flowchart TD` → means flowchart **`Top → Down`** 
+    - ***other options:***
+        - `LR` → **`left→right`**, 
+        - `RL` → **`right→left`**, 
+        - `BT` → **`bottom→top`**.
+- `A[Text]` → defines a node named `A` with label `Text`.
+- `A --> B` → arrow from `A` to `B`.
 
 ---
 
-## 🟢 STEP 2: Verify Mount
-Check if the drive is mounted correctly:
+## 2. Node Shapes
 
-``` bash
-df -h | grep "$MOUNTPOINT"
+``` mermaid
+flowchart TD
+    A[Rectangle] --> B(Rounded)
+    B --> C{Decision?}
+    C -->|Yes| D[Do this]
+    C -->|No| E[Do that]
 ```
 
-- `df -h` → shows disk usage in human-readable format (sizes like `10M`, `1G`).
-- `grep "$MOUNTPOINT"` → filters only lines containing your mount point.
+- `[Text]`* → **`Rectangle`**
+- `(Text)` → **`Rounded`**
+- `{Text}` → **`Diamond (decision**)`**
+- `((Text))` → **`Circle`**
+- `[/Text/]` → **`Parallelogram (input/output)`**
 
 ---
 
-## 🟢 STEP 3: Copy Folders with Progress
-We use `rsync` to copy data:
-```bash
-rsync -avh --progress \
-    ~/WORKSPACE/Folder1/ \
-    ~/WORKSPACE/Folder2/ \
-    ~/WORKSPACE/Folder3/ \
-    "$MOUNTPOINT/"
+## 3. Escaping Special Characters
+
+### Some symbols (**`~`**, **`|`**, **`{}`**, **`()`**) may break Mermaid parsing.
+✅ Fix → wrap in quotes **`" "`** or escape with **`\`**.
+
+Example:
+
+``` mermaid
+flowchart TD
+    A["cd ~ (go home dir)"] --> B["echo \$USER"]
 ```
 
-### Flags:
-- `-a` → archive mode (preserves symlinks, permissions, timestamps).
-- `-v` → verbose (prints what’s being copied).
-- `-h` → human-readable (shows `10M` instead of `10485760`).
-- `--progress` → shows progress bar and percentage per file.
-
-### Paths:
-- `~` → shortcut for your home directory (`/home/mourad`).
-- `Folder1`/ (with `/`) → copy ***`contents of the folder`***, **`not`** the ***`folder itself`***.
-- Without `/` → the ***`folder itself`*** will be copied into the destination.
-
 ---
 
-## 🟢 STEP 4: Confirm Copy Completed
-You should see:
+## 4. Adding Colors 🎨
 
-``` python
-sent XXX bytes  received XXX bytes  total size is XXX
+You can **`style nodes`** using **`style`** or define **`classes`**.
+
+### **a) Style individual nodes**
+
+```mermaid 
+flowchart TD
+    A[Start] --> B[Process]
+    style A fill:#4CAF50,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#FF9800,stroke:#333,stroke-width:2px,color:#000
 ```
-This confirms data was transferred.
 
----
+### **b) Define reusable classes**
 
-## 🟢 STEP 5: Safe Eject of External HDD
-Before unplugging, unmount and power off safely.
+```mermaid
+flowchart TD
+    A[Start]:::green --> B[Warning]:::orange --> C[End]:::red
 
-### 5.1 Make sure you’re not inside the mount folder
-
-``` bash
-if [[ $PWD == $MOUNTPOINT* ]]; then
-    cd ~
-fi
+    classDef green fill:#4CAF50,stroke:#333,stroke-width:2px,color:#fff;
+    classDef orange fill:#FF9800,stroke:#333,stroke-width:2px,color:#000;
+    classDef red fill:#F44336,stroke:#333,stroke-width:2px,color:#fff;
 ```
-- `$PWD` → built-in variable with your present working directory.
-- `[[ $PWD == $MOUNTPOINT* ]]` → checks if current folder path starts with `$MOUNTPOINT`.
-- `*` → wildcard (any characters after).
-- `cd ~` → move back to home directory.
 
 ---
 
-### 5.2 Check if any process is still using the disk
-``` bash
-lsof +f -- "$MOUNTPOINT"
+## 5. Full Example: Copy Workflow
+
+```mermaid
+flowchart TD
+    A[Start]:::green --> B[Check Mountpoint Directory]:::blue
+    B -->|Doesn't exist| C[mkdir -p]:::orange
+    B -->|Exists| D[Skip Creation]:::grey
+
+    C --> E[Mount /dev/sda1]:::blue
+    D --> E
+
+    E --> F[df -h]:::purple
+    F --> G[rsync -avh --progress]:::yellow
+    G --> H[Confirm Copy Complete]:::green
+    H --> I[Check if inside $MOUNTPOINT]:::orange
+    I -->|Yes| J["cd ~ (go home dir)"]:::grey
+    I -->|No| K[Proceed]:::blue
+    J --> K
+
+    K --> L[lsof check]:::purple
+    L --> M[Unmount: udisksctl unmount -b /dev/sda1]:::red
+    M --> N[Power off: udisksctl power-off -b /dev/sda]:::red
+    N --> O[Safe to Remove Drive ✅]:::green
+
+    classDef green fill:#4CAF50,stroke:#333,stroke-width:2px,color:#fff;
+    classDef blue fill:#2196F3,stroke:#333,stroke-width:2px,color:#fff;
+    classDef orange fill:#FF9800,stroke:#333,stroke-width:2px,color:#000;
+    classDef red fill:#F44336,stroke:#333,stroke-width:2px,color:#fff;
+    classDef purple fill:#9C27B0,stroke:#333,stroke-width:2px,color:#fff;
+    classDef yellow fill:#FFEB3B,stroke:#333,stroke-width:2px,color:#000;
+    classDef grey fill:#9E9E9E,stroke:#333,stroke-width:2px,color:#fff;
 ```
-- `lsof` → list open files (shows which processes are using the mount).
-- `+f --` → restricts search to the filesystem.
 
 ---
 
-### 5.3 Unmount the partition
-``` bash
-udisksctl unmount -b /dev/sda1
-```
-- udisksctl → tool to manage disks.
-- unmount -b /dev/sda1 → unmounts the partition `/dev/sda1`.
+## 6. Common Symbols & Syntax Cheatsheet
+
+| Symbol       | Meaning                                    |
+|--------------|--------------------------------------------|
+|   `-->`      | Arrow (normal)                             |
+|   `-.->`	   | Arrow (dashed)                             |
+|   `==>`      | Arrow (thick)                              |
+|   `[Text]`   | Rectangle node                             |
+|   `(Text)`   | Rounded node                               |
+|   `{Text}`   | Diamond (decision)                         |
+|   `((Text))` | Circle node                                |
+|   `"Text"`   | Quote text (allow spaces/symbols)          |
+|   `\`	       | Escape character (e.g. `\~`, `\$USER`)     |
 
 ---
 
-### 5.4 Power off the whole drive
-``` bash 
-udisksctl power-off -b /dev/sda
-```
-- `power-off` → tells the drive to spin down / cut power (like Windows eject).
 
-Now it is **safe to unplug your external HDD**.
+# Example:
 
----
-
-## ✅ Summary
-
-1. Create/check mount directory.
-2. M0ount /dev/sda1 to it.
-3. Verify with df -h.
-4. Copy folders with rsync -avh --progress.
-5. Unmount and power off safely with udisksctl.
 
 That’s it! 🎉 We now have a **step-by-step manual process** for safe copying and ejecting in Ubuntu.
 

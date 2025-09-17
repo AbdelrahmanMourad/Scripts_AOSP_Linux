@@ -136,6 +136,10 @@ sudo apt update && sudo apt upgrade -y
 echo "[1/5] ✅ System update complete."
 echo
 
+# ---------------------- [1/5] Install Extensions --------------------------
+# --- Markdown Preview Mermaid Support ---
+
+
 # ---------------------- [2/5] Install Formatters ----------------------
 echo "[2/5] Installing code formatters..."
 
