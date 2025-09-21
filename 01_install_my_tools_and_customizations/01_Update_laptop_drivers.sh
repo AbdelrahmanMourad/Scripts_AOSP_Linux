@@ -57,12 +57,34 @@ CUDA_SAMPLES_DIR=~/cuda-samples
 mkdir -p "$CUDA_SAMPLES_DIR"
 cp -r /usr/share/doc/nvidia-cuda-toolkit/examples/* "$CUDA_SAMPLES_DIR" 2>/dev/null || true
 
-# Build the deviceQuery sample
-cd "$CUDA_SAMPLES_DIR/4_Finance/deviceQuery" || { echo "[ERROR] deviceQuery path not found"; exit 1; }
-make clean && make
+# Find deviceQuery sample directory
+DEVICE_QUERY_DIR=$(find "$CUDA_SAMPLES_DIR" -type d -name deviceQuery | head -n 1)
+if [ -z "$DEVICE_QUERY_DIR" ]; then
+    echo "[ERROR] deviceQuery sample not found in $CUDA_SAMPLES_DIR"
+else
+    cd "$DEVICE_QUERY_DIR" || { echo "[ERROR] Cannot enter deviceQuery directory"; exit 1; }
+    make clean && make
+    echo "[INFO] Running CUDA deviceQuery..."
+    ./deviceQuery
+fi
 
-# Run the test
-echo "[INFO] Running CUDA deviceQuery..."
-./deviceQuery
+# Download and build CUDA samples if deviceQuery is missing
+DEVICE_QUERY_DIR=$(find "$CUDA_SAMPLES_DIR" -type d -name deviceQuery | head -n 1)
+
+if [ -z "$DEVICE_QUERY_DIR" ]; then
+    echo "[INFO] deviceQuery not found, downloading CUDA samples from NVIDIA..."
+    CUDA_SAMPLES_REPO="https://github.com/NVIDIA/cuda-samples.git"
+    git clone --depth 1 "$CUDA_SAMPLES_REPO" "$CUDA_SAMPLES_DIR"
+    DEVICE_QUERY_DIR=$(find "$CUDA_SAMPLES_DIR" -type d -name deviceQuery | head -n 1)
+fi
+
+if [ -z "$DEVICE_QUERY_DIR" ]; then
+    echo "[ERROR] deviceQuery sample still not found in $CUDA_SAMPLES_DIR"
+else
+    cd "$DEVICE_QUERY_DIR" || { echo "[ERROR] Cannot enter deviceQuery directory"; exit 1; }
+    make clean && make
+    echo "[INFO] Running CUDA deviceQuery..."
+    ./deviceQuery
+fi
 
 echo "=== Script completed! Check above for 'Result = PASS' to confirm CUDA works ==="

@@ -29,36 +29,38 @@ sudo sysctl -w kernel.apparmor_restrict_unprivileged_unconfined=0
 sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0 
 #
 #
+# ==================================================================
 # Install required packages
+# ==================================================================
 #   To install required packages for Ubuntu 18.04 or later, run the following command:
 sudo apt-get install git-core gnupg flex bison build-essential zip curl zlib1g-dev libc6-dev-i386 x11proto-core-dev libx11-dev lib32z1-dev libgl1-mesa-dev libxml2-utils xsltproc unzip fontconfig
 #
 #
-# # ==================
-# # Install Repo tool:
-# # ==================
-# #   1. Download the current package information:
-# sudo apt-get update
-# #
-# #   2. Run the following command to install the Repo launcher:
-# #       The Repo launcher provides a Python script that initializes a checkout and downloads the full Repo tool.
-# #       If successful, skip to step 4.
-# sudo apt-get install repo
-# #
-# #   3. (optional) Manually install Repo using the following series of commands:
-# #       The first three commands set up a temp file, download Repo to the file, and verify that the key provided 
-# #       matches the required key. If these commands are successful, the final command installs the Repo launcher.
-# export REPO=$(mktemp /tmp/repo.XXXXXXXXX)
-# curl -o ${REPO} https://storage.googleapis.com/git-repo-downloads/repo
-# gpg --recv-keys 8BB9AD793E8E6153AF0F9A4416530D5E920F5C65
-# curl -s https://storage.googleapis.com/git-repo-downloads/repo.asc | gpg --verify - ${REPO} && install -m 755 ${REPO} ~/bin/repo
-# #
-# #   4. Verify the Repo launcher version:
-# repo version
-# # The output should indicate a version of 2.4 or higher, for example:
-# #   repo launcher version 2.45
-# #
+# ==================
+# Install Repo tool:
+# ==================
+#   1. Download the current package information:
+sudo apt-get update
 #
+#   2. Run the following command to install the Repo launcher:
+#       The Repo launcher provides a Python script that initializes a checkout and downloads the full Repo tool.
+#       If successful, skip to step 4.
+sudo apt-get install repo
+#
+#   3. (optional) Manually install Repo using the following series of commands:
+#       The first three commands set up a temp file, download Repo to the file, and verify that the key provided 
+#       matches the required key. If these commands are successful, the final command installs the Repo launcher.
+export REPO=$(mktemp /tmp/repo.XXXXXXXXX)
+curl -o ${REPO} https://storage.googleapis.com/git-repo-downloads/repo
+gpg --recv-keys 8BB9AD793E8E6153AF0F9A4416530D5E920F5C65
+curl -s https://storage.googleapis.com/git-repo-downloads/repo.asc | gpg --verify - ${REPO} && install -m 755 ${REPO} ~/bin/repo
+#
+#   4. Verify the Repo launcher version:
+repo version
+# The output should indicate a version of 2.4 or higher, for example:
+#   repo launcher version 2.45
+#
+
 #############################################
 # Download The Android AOSP Source Code:
 #############################################

@@ -383,7 +383,7 @@ sudo apt install -y libreoffice
 #   - Best compatibility with .docx/.xlsx/.pptx files.
 # -----------------------------------------------------
 echo "[INFO] Installing OnlyOffice..."
-sudo apt install -y onlyoffice-desktopeditors
+sudo snap install onlyoffice-desktopeditors
 
 # -----------------------------------------------------
 # WPS Office (Free alternative to MS Office)
