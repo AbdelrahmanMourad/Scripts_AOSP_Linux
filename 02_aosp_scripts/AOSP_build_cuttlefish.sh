@@ -66,8 +66,9 @@ repo version
 #############################################
 #
 # The Android source is located in a collection of Git repositories hosted by Google. 
-#   Each Git repository includes the entire history of the Android source, 
-#   including changes to the source and when the changes were made. To download the Android source:
+# Each Git repository includes the entire history of the Android source, 
+#   including changes to the source and when the changes were made. 
+# To download the Android source:
 #
 #   1. Navigate into your home directory:
 cd ~/WORKSPACE/
