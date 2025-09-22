@@ -18,6 +18,9 @@ echo "==================="
 echo "Cloning my repos..."
 echo "==================="
 echo
+echo "-------------------"
+git clone git@github.com:AbdullahAbdelhakeem6484/AOSP_Automotive_Portfolio.git
+echo "-------------------"
 git clone git@github.com:AbdelrahmanMourad/Scripts_AOSP_Linux.git
 echo "-------------------"
 git clone git@github.com:AbdelrahmanMourad/Course_CPP17_DrMostafaSaadIbrahim.git
