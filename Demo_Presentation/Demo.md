@@ -67,3 +67,5 @@ Slide 9 – Roadmap / Milestones
 - Milestone 2: GPIO + Audio/Video  
 - Milestone 3: Safety + Web Services  
 - Milestone 4: AI & Advanced Features  
+
+
