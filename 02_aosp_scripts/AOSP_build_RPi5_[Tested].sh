@@ -60,12 +60,14 @@ git config --global user.email "abdelrahmanmourad.am@gmail.com"
 sudo apt-get install bc coreutils dosfstools e2fsprogs fdisk kpartx mtools ninja-build pkg-config python3-pip
 # sudo pip3 install meson mako jinja2 ply pyyaml dataclasses
 sudo apt-get install python3-venv python3-full
+
+# --------------------------
+# Python Virtual Environment:
+# --------------------------
 python3 -m venv ~/aosp-venv
-# source ~/aosp-venv/bin/activate
-# pip install meson mako jinja2 ply pyyaml
-pip install --user meson mako jinja2 ply pyyaml
-
-
+source ~/aosp-venv/bin/activate
+pip install meson mako jinja2 ply pyyaml
+deactivate
 
 # ----------------------------
 # Initialize the android repo:
@@ -115,6 +117,7 @@ make clean
 #   (customize as needed, must be before the build commands)
 # ==================================================================
 export OUT_DIR=~/WORKSPACE/AOSP_15.0.0_36/out_AOSP15_RPi5
+# export OUT_DIR=~/WORKSPACE/AOSP_15.0.0_36/out_AOSP15_Trout
 # export OUT_DIR=~/WORKSPACE/AOSP_15.0.0_36/out_AOSP15_CF
 
 #
@@ -132,7 +135,8 @@ export OUT_DIR=~/WORKSPACE/AOSP_15.0.0_36/out_AOSP15_RPi5
 #-----------------------------------------
 # Pick “aosp_rpi5_car-trunk_staging-userdebug” for Raspberry Pi 5 Automotive OS Build.
 lunch aosp_rpi5_car-trunk_staging-userdebug
-# lunch aosp_cf_x86_64_auto-trunk_staging-userdebug 
+# lunch aosp_cf_x86_64_auto-trunk_staging-userdebug
+# lunch aosp_trout-userdebug
 #
 # ============================================
 # ============Output Configuration============
