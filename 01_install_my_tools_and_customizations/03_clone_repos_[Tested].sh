@@ -72,6 +72,8 @@ git clone git@github.com:AbdelrahmanMourad/hackerrank-solutions.git
 echo "-------------------"
 git clone git@github.com:AbdelrahmanMourad/Competitive-Programming.git
 echo "-------------------"
+git clone git@github.com:AbdullahAbdelhakeem6484/LegionForgeX_RTX_5070_EmbeddedAOSP_GenAI.git
+echo "-------------------"
 git clone git@github.com:AbdelrahmanMourad/PX4-user_guide.git
 echo "-------------------"
 git clone git@github.com:AbdelrahmanMourad/MasteringEmbeddedSystemOnlineDiploma.git
