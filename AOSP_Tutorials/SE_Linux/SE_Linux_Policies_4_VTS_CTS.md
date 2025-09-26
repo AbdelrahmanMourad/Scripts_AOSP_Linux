@@ -199,6 +199,8 @@ run vts
 
 👉 References: VTS docs, CTS run guide
 
+![1758914711456](image/SE_Linux_Policies_4_VTS_CTS/1758914711456.png)
+
 # 🧩 Putting It Together
 
 * **SELinux policy** : ensures your daemon runs securely.
